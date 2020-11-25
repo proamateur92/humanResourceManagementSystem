@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="insaMapper">
+   <select id="insert">
+   		INSERT INTO INSA(
+   			SABUN
+   			,NAME
+   			,REG_NO
+   			,HP
+   			,EMAIL
+   			,ID
+   			,PWD
+   		) VALUES (
+   			(SELECT (NVL(MAX(sabun), 0)) + 1 
+   			FROM INSA)
+   			,#{name}
+   			,#{reg_no}
+   			,#{hp}
+   			,#{email}
+   			,#{id}
+   			,#{pwd}
+   		)
+   </select>
+   
+   <select id="list" resultType="kr.co.vo.InsaVO">
+   		SELECT * FROM
+   		INSA
+   </select>
+   
+   <select id="comList" resultType="kr.co.vo.comVO">
+   		SELECT * FROM
+   		INSA_COM
+   </select>
+</mapper>
