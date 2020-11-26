@@ -58,11 +58,15 @@
   <!-- Header -->
   <header class="masthead d-flex">
     <div class="container text-center my-auto">
-      <h1 class="mb-1">Stylish Portfolio</h1>
+      <h1 class="mb-1">PINOSOFT</h1>
       <h3 class="mb-5">
-        <em>A Free Bootstrap Theme by Start Bootstrap</em>
+        <em>인사관리 시스템</em><br>
       </h3>
-      <a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">Find Out More</a>
+      <hr>
+      <h5 class="mb-5">
+      	<em>인사정보를 입력하겠습니다.<a class="btn btn-primary btn-xl js-scroll-trigger" href="/inputForm">입력</a></em><br><br>
+     	<em>인사정보를 조회하겠습니다.<a class="btn btn-primary btn-xl js-scroll-trigger" href="/listForm">조회</a></em>
+      </h5>
     </div>
     <div class="overlay"></div>
   </header>

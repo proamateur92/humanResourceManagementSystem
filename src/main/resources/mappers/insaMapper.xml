@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="insaMapper">
-   <select id="insert">
+   <select id="insert" parameterType="kr.co.vo.InsaVO">
    		INSERT INTO INSA(
    			SABUN
    			,NAME
@@ -12,6 +12,30 @@
    			,EMAIL
    			,ID
    			,PWD
+   			,PHOTO
+   			,MIL_DATE1
+   			,MIL_DATE2
+   			,GENDER
+   			,ENG_NAME
+   			,AGE
+   			,MAJOR
+   			,RANK
+   			,DEPT
+   			,SAL
+   			,JOIN_CHECK
+   			,SCHOOL
+   			,INPUT_CHECK
+   			,MIL_CHECK
+   			,MIL_KIND
+   			,MIL_RANK
+   			,KOSA_REG
+   			,KOSA_RANK
+   			,ENTER_DATE
+   			,LEAVE_DATE
+   			,EMPNO
+   			,COMPANY
+   			,RESERV
+   			,INTRODUCE
    		) VALUES (
    			(SELECT (NVL(MAX(sabun), 0)) + 1 
    			FROM INSA)
@@ -21,6 +45,30 @@
    			,#{email}
    			,#{id}
    			,#{pwd}
+   			,#{photo}
+   			,#{mil_date1}
+   			,#{mil_date2}
+   			,#{gender}
+   			,#{eng_name}
+   			,#{age}
+   			,#{major}
+   			,#{rank}
+   			,#{dept}
+   			,#{sal}
+   			,#{join_check}
+   			,#{school}
+   			,#{input_check}
+   			,#{mil_check}
+   			,#{mil_kind}
+   			,#{mil_rank}
+   			,#{kosa_reg}
+   			,#{kosa_rank}
+   			,#{enter_date}
+   			,#{leave_date}
+   			,#{empno}
+   			,#{company}
+   			,#{reserv}
+   			,#{introduce}
    		)
    </select>
    
@@ -32,5 +80,77 @@
    <select id="comList" resultType="kr.co.vo.comVO">
    		SELECT * FROM
    		INSA_COM
+   </select>
+   
+   <select id="update" parameterType="kr.co.vo.comVO">
+   		UPDATE INTO INSA
+   		SET (
+   			SABUN
+   			,NAME
+   			,REG_NO
+   			,HP
+   			,EMAIL
+   			,ID
+   			,PWD
+   			,PHOTO
+   			,MIL_DATE1
+   			,MIL_DATE2
+   			,GENDER
+   			,ENG_NAME
+   			,AGE
+   			,MAJOR
+   			,RANK
+   			,DEPT
+   			,SAL
+   			,JOIN_CHECK
+   			,SCHOOL
+   			,INPUT_CHECK
+   			,MIL_CHECK
+   			,MIL_KIND
+   			,MIL_RANK
+   			,KOSA_REG
+   			,KOSA_RANK
+   			,ENTER_DATE
+   			,LEAVE_DATE
+   			,EMPNO
+   			,COMPANY
+   			,RESERV
+   			,INTRODUCE
+   		)
+   		VALUES(
+   			#{sabun}
+   			,#{name}
+   			,#{reg_no}
+   			,#{hp}
+   			,#{email}
+   			,#{id}
+   			,#{pwd}
+   			,#{photo}
+   			,#{mil_date1}
+   			,#{mil_date2}
+   			,#{gender}
+   			,#{eng_name}
+   			,#{age}
+   			,#{major}
+   			,#{rank}
+   			,#{dept}
+   			,#{sal}
+   			,#{join_check}
+   			,#{school}
+   			,#{input_check}
+   			,#{mil_check}
+   			,#{mil_kind}
+   			,#{mil_rank}
+   			,#{kosa_reg}
+   			,#{kosa_rank}
+   			,#{enter_date}
+   			,#{leave_date}
+   			,#{empno}
+   			,#{company}
+   			,#{reserv}
+   			,#{introduce}
+   		)
+   		WHERE 
+   		SABUN = ${SABUN}
    </select>
 </mapper>
