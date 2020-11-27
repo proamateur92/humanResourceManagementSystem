@@ -106,18 +106,18 @@
 												<td>${insa.reg_no }</td>
 												<td>${insa.hp }</td>
 												<td><c:forEach var="com" items="${com}">
-														<c:if test="${insa.rank eq com.code}">
+														<c:if test="${insa.pos_gbn_code eq com.code}">
 		                                            			${com.name }
 		                                            		</c:if>
 													</c:forEach></td>
-												<td>${insa.enter_date}</td>
-												<td>${insa.leave_date }</td>
+												<td>${insa.join_day}</td>
+												<td>${insa.retire_day }</td>
 												<td><c:forEach var="com" items="${com}">
-														<c:if test="${insa.input_check eq com.code}">
+														<c:if test="${insa.put_yn eq com.code}">
 		                                            			${com.name }
 		                                            		</c:if>
 													</c:forEach></td>
-												<td>${insa.sal }</td>
+												<td>${insa.salary }</td>
 											</tr>
 										</c:forEach>
 									</tbody>

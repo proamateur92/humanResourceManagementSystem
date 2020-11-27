@@ -44,30 +44,11 @@ public class MainController {
 		List<comVO> list = service.comList();
 
 		model.addAttribute("comList", list);
-		return "inputForm2";
+		return "inputForm";
 	}
 
 	@RequestMapping(value = "/inputForm", method = RequestMethod.POST)
-	public String insaInput(InsaVO insaVO, MultipartHttpServletRequest mtf) throws Exception {
-		// 파일 태그
-		String fileTag = "up_upload";
-		String str = insaVO.getPhoto();
-		// 업로드 파일이 저장될 경로
-		String filePath = "C:\\Users\\PINOSOFT\\Desktop\\photo\\";
-
-		// 파일 이름
-		MultipartFile file = mtf.getFile(fileTag);
-
-		String fileName = "(" + str + ")" + file.getOriginalFilename();
-
-		// 파일 전송
-		try {
-			file.transferTo(new File(filePath + fileName));
-
-		} catch (Exception e) {
-			System.out.println("업로드 오류");
-		}
-		insaVO.setPhoto(fileName);
+	public String insaInput(InsaVO insaVO) throws Exception {
 		int check = service.insert(insaVO);
 
 		logger.info(check < 1 ? "N" : "Y");
@@ -75,33 +56,9 @@ public class MainController {
 		return "redirect:/";
 	}
 
-	@RequestMapping(value = "/uploadTest", method = RequestMethod.POST)
-	@ResponseBody
-	public void uploadTest(InsaVO insaVO, MultipartHttpServletRequest mtf) throws Exception {
-		String fileTag = "up_upload";
-		String str = insaVO.getPhoto();
-		// 업로드 파일이 저장될 경로
-		String filePath = "C:\\Users\\PINOSOFT\\Desktop\\photo\\";
-
-		// 파일 이름
-		MultipartFile file = mtf.getFile(fileTag);
-
-		String fileName = "(" + str + ")" + file.getOriginalFilename();
-
-		// 파일 전송
-		try {
-			file.transferTo(new File(filePath + fileName));
-
-		} catch (Exception e) {
-			System.out.println("업로드 오류");
-		}
-		insaVO.setPhoto(fileName);
-	}
-	
 	@RequestMapping(value = "/test", method = RequestMethod.POST)
 	@ResponseBody
 	public void test(InsaVO insaVO) throws Exception {
-		// 파일 태그
 				int check = service.insert(insaVO);
 
 				logger.info(check < 1 ? "N" : "Y");

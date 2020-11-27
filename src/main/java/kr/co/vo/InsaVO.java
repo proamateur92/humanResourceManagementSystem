@@ -1,187 +1,72 @@
 package kr.co.vo;
 
+
 public class InsaVO {
 	private int sabun;
-	private String name;
+	private String join_day;
+    private String retire_day;
+    private String put_yn;
+    private String name;
     private String reg_no;
+    private String eng_name;
     private String hp;
+    private String carrier;
+    private String pos_gbn_code;
+    private String cmp_reg_image;
+    private String sex;
+    private int years;
     private String email;
+    private int zip;
+    private String addr1;
+    private String addr2;
+    private String dept_code;
+    private String join_gbn_code;
     private String id;
     private String pwd;
-    private String photo;
-    private String mil_date1;
-    private String mil_date2;
-    private String gender;
-    private String eng_name;
-    private String age;
-    private String major;
-    private String rank;
-    private String dept;
-    private String sal;
-    private String join_check;
-    private String school;
-    private String input_check;
-    private String mil_check;
-    private String mil_kind;
-    private String mil_rank;
-    private String kosa_reg;
-    private String kosa_rank;
-    private String enter_date;
-    private String leave_date;
-    private String empno;
-    private String company;
-    private String reserv;
-    private String introduce;
-    
-	public String getIntroduce() {
-		return introduce;
+    private int salary;
+    private String kosa_reg_yn;
+    private String kosa_class_code;
+    private String mil_yn;
+    private String mil_type;
+    private String mil_level;
+    private String mil_startdate;
+    private String mil_enddate;
+    private String job_type;
+    private String gart_level;
+    private String self_intro;
+    private String crm_name;
+    private String profile_image;
+    private String carrier_image;
+    private String cmp_reg_no;
+	public String getCmp_reg_no() {
+		return cmp_reg_no;
 	}
-	public void setIntroduce(String introduce) {
-		this.introduce = introduce;
-	}
-	public String getEng_name() {
-		return eng_name;
-	}
-	public void setEng_name(String eng_name) {
-		this.eng_name = eng_name;
-	}
-	public String getAge() {
-		return age;
-	}
-	public void setAge(String age) {
-		this.age = age;
-	}
-	public String getMajor() {
-		return major;
-	}
-	public void setMajor(String major) {
-		this.major = major;
-	}
-	public String getRank() {
-		return rank;
-	}
-	public void setRank(String rank) {
-		this.rank = rank;
-	}
-	public String getDept() {
-		return dept;
-	}
-	public void setDept(String dept) {
-		this.dept = dept;
-	}
-	public String getSal() {
-		return sal;
-	}
-	public void setSal(String sal) {
-		this.sal = sal;
-	}
-	public String getJoin_check() {
-		return join_check;
-	}
-	public void setJoin_check(String join_check) {
-		this.join_check = join_check;
-	}
-	public String getSchool() {
-		return school;
-	}
-	public void setSchool(String school) {
-		this.school = school;
-	}
-	public String getInput_check() {
-		return input_check;
-	}
-	public void setInput_check(String input_check) {
-		this.input_check = input_check;
-	}
-	public String getMil_check() {
-		return mil_check;
-	}
-	public void setMil_check(String mil_check) {
-		this.mil_check = mil_check;
-	}
-	public String getMil_kind() {
-		return mil_kind;
-	}
-	public void setMil_kind(String mil_kind) {
-		this.mil_kind = mil_kind;
-	}
-	public String getMil_rank() {
-		return mil_rank;
-	}
-	public void setMil_rank(String mil_rank) {
-		this.mil_rank = mil_rank;
-	}
-	public String getKosa_reg() {
-		return kosa_reg;
-	}
-	public void setKosa_reg(String kosa_reg) {
-		this.kosa_reg = kosa_reg;
-	}
-	public String getKosa_rank() {
-		return kosa_rank;
-	}
-	public void setKosa_rank(String kosa_rank) {
-		this.kosa_rank = kosa_rank;
-	}
-	public String getEnter_date() {
-		return enter_date;
-	}
-	public void setEnter_date(String enter_date) {
-		this.enter_date = enter_date;
-	}
-	public String getLeave_date() {
-		return leave_date;
-	}
-	public void setLeave_date(String leave_date) {
-		this.leave_date = leave_date;
-	}
-	public String getEmpno() {
-		return empno;
-	}
-	public void setEmpno(String empno) {
-		this.empno = empno;
-	}
-	public String getCompany() {
-		return company;
-	}
-	public void setCompany(String company) {
-		this.company = company;
-	}
-	public String getReserv() {
-		return reserv;
-	}
-	public void setReserv(String reserv) {
-		this.reserv = reserv;
-	}
-	public String getGender() {
-		return gender;
-	}
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-	public String getMil_date1() {
-		return mil_date1;
-	}
-	public void setMil_date1(String mil_date1) {
-		this.mil_date1 = mil_date1;
-	}
-	public String getMil_date2() {
-		return mil_date2;
-	}
-	public void setMil_date2(String mil_date2) {
-		this.mil_date2 = mil_date2;
-	}
-	public String getPhoto() {
-		return photo;
-	}
-	public void setPhoto(String photo) {
-		this.photo = photo;
+	public void setCmp_reg_no(String cmp_reg_no) {
+		this.cmp_reg_no = cmp_reg_no;
 	}
 	public int getSabun() {
 		return sabun;
 	}
 	public void setSabun(int sabun) {
 		this.sabun = sabun;
+	}
+	public String getJoin_day() {
+		return join_day;
+	}
+	public void setJoin_day(String join_day) {
+		this.join_day = join_day;
+	}
+	public String getRetire_day() {
+		return retire_day;
+	}
+	public void setRetire_day(String retire_day) {
+		this.retire_day = retire_day;
+	}
+	public String getPut_yn() {
+		return put_yn;
+	}
+	public void setPut_yn(String put_yn) {
+		this.put_yn = put_yn;
 	}
 	public String getName() {
 		return name;
@@ -195,17 +80,83 @@ public class InsaVO {
 	public void setReg_no(String reg_no) {
 		this.reg_no = reg_no;
 	}
+	public String getEng_name() {
+		return eng_name;
+	}
+	public void setEng_name(String eng_name) {
+		this.eng_name = eng_name;
+	}
 	public String getHp() {
 		return hp;
 	}
 	public void setHp(String hp) {
 		this.hp = hp;
 	}
+	public String getCarrier() {
+		return carrier;
+	}
+	public void setCarrier(String carrier) {
+		this.carrier = carrier;
+	}
+	public String getPos_gbn_code() {
+		return pos_gbn_code;
+	}
+	public void setPos_gbn_code(String pos_gbn_code) {
+		this.pos_gbn_code = pos_gbn_code;
+	}
+	public String getCmp_reg_image() {
+		return cmp_reg_image;
+	}
+	public void setCmp_reg_image(String cmp_reg_image) {
+		this.cmp_reg_image = cmp_reg_image;
+	}
+	public String getSex() {
+		return sex;
+	}
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+	public int getYears() {
+		return years;
+	}
+	public void setYears(int years) {
+		this.years = years;
+	}
 	public String getEmail() {
 		return email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public int getZip() {
+		return zip;
+	}
+	public void setZip(int zip) {
+		this.zip = zip;
+	}
+	public String getAddr1() {
+		return addr1;
+	}
+	public void setAddr1(String addr1) {
+		this.addr1 = addr1;
+	}
+	public String getAddr2() {
+		return addr2;
+	}
+	public void setAddr2(String addr2) {
+		this.addr2 = addr2;
+	}
+	public String getDept_code() {
+		return dept_code;
+	}
+	public void setDept_code(String dept_code) {
+		this.dept_code = dept_code;
+	}
+	public String getJoin_gbn_code() {
+		return join_gbn_code;
+	}
+	public void setJoin_gbn_code(String join_gbn_code) {
+		this.join_gbn_code = join_gbn_code;
 	}
 	public String getId() {
 		return id;
@@ -219,6 +170,89 @@ public class InsaVO {
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
-	
+	public int getSalary() {
+		return salary;
+	}
+	public void setSalary(int salary) {
+		this.salary = salary;
+	}
+	public String getKosa_reg_yn() {
+		return kosa_reg_yn;
+	}
+	public void setKosa_reg_yn(String kosa_reg_yn) {
+		this.kosa_reg_yn = kosa_reg_yn;
+	}
+	public String getKosa_class_code() {
+		return kosa_class_code;
+	}
+	public void setKosa_class_code(String kosa_class_code) {
+		this.kosa_class_code = kosa_class_code;
+	}
+	public String getMil_yn() {
+		return mil_yn;
+	}
+	public void setMil_yn(String mil_yn) {
+		this.mil_yn = mil_yn;
+	}
+	public String getMil_type() {
+		return mil_type;
+	}
+	public void setMil_type(String mil_type) {
+		this.mil_type = mil_type;
+	}
+	public String getMil_level() {
+		return mil_level;
+	}
+	public void setMil_level(String mil_level) {
+		this.mil_level = mil_level;
+	}
+	public String getMil_startdate() {
+		return mil_startdate;
+	}
+	public void setMil_startdate(String mil_startdate) {
+		this.mil_startdate = mil_startdate;
+	}
+	public String getMil_enddate() {
+		return mil_enddate;
+	}
+	public void setMil_enddate(String mil_enddate) {
+		this.mil_enddate = mil_enddate;
+	}
+	public String getJob_type() {
+		return job_type;
+	}
+	public void setJob_type(String job_type) {
+		this.job_type = job_type;
+	}
+	public String getGart_level() {
+		return gart_level;
+	}
+	public void setGart_level(String gart_level) {
+		this.gart_level = gart_level;
+	}
+	public String getSelf_intro() {
+		return self_intro;
+	}
+	public void setSelf_intro(String self_intro) {
+		this.self_intro = self_intro;
+	}
+	public String getCrm_name() {
+		return crm_name;
+	}
+	public void setCrm_name(String crm_name) {
+		this.crm_name = crm_name;
+	}
+	public String getProfile_image() {
+		return profile_image;
+	}
+	public void setProfile_image(String profile_image) {
+		this.profile_image = profile_image;
+	}
+	public String getCarrier_image() {
+		return carrier_image;
+	}
+	public void setCarrier_image(String carrier_image) {
+		this.carrier_image = carrier_image;
+	}
     
 }

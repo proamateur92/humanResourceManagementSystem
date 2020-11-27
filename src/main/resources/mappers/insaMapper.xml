@@ -5,72 +5,103 @@
 <mapper namespace="insaMapper">
    <select id="insert" parameterType="kr.co.vo.InsaVO">
    		INSERT INTO INSA(
-   			SABUN
-   			,NAME
-   			,REG_NO
-   			,HP
-   			,EMAIL
-   			,ID
-   			,PWD
-   			,PHOTO
-   			,MIL_DATE1
-   			,MIL_DATE2
-   			,GENDER
-   			,ENG_NAME
-   			,AGE
-   			,MAJOR
-   			,RANK
-   			,DEPT
-   			,SAL
-   			,JOIN_CHECK
-   			,SCHOOL
-   			,INPUT_CHECK
-   			,MIL_CHECK
-   			,MIL_KIND
-   			,MIL_RANK
-   			,KOSA_REG
-   			,KOSA_RANK
-   			,ENTER_DATE
-   			,LEAVE_DATE
-   			,EMPNO
-   			,COMPANY
-   			,RESERV
-   			,INTRODUCE
+   			sabun
+   			,name
+   			,reg_no
+   			,email
+   			,id
+   			,pwd
+   			,join_day
+   			,retire_day
+   			,put_yn
+   			,eng_name
+   			,hp
+   			,carrier
+   			,pos_gbn_code
+   			,cmp_reg_image
+   			,sex
+   			,years
+   			,zip
+   			,addr1
+   			,addr2
+   			,dept_code
+   			,join_gbn_code
+   			,salary
+   			,kosa_reg_yn
+   			,kosa_class_code
+   			,mil_yn
+   			,mil_type
+   			,mil_level
+   			,mil_startdate
+   			,mil_enddate
+   			,job_type
+   			,gart_level
+   			,self_intro
+   			,crm_name
+   			,profile_image
+   			,carrier_image
+   			,cmp_reg_no
    		) VALUES (
    			(SELECT (NVL(MAX(sabun), 0)) + 1 
    			FROM INSA)
    			,#{name}
    			,#{reg_no}
-   			,#{hp}
    			,#{email}
    			,#{id}
    			,#{pwd}
-   			,#{photo}
-   			,#{mil_date1}
-   			,#{mil_date2}
-   			,#{gender}
+   			,#{join_day}
+   			,#{retire_day}
+   			,#{put_yn}
    			,#{eng_name}
-   			,#{age}
-   			,#{major}
-   			,#{rank}
-   			,#{dept}
-   			,#{sal}
-   			,#{join_check}
-   			,#{school}
-   			,#{input_check}
-   			,#{mil_check}
-   			,#{mil_kind}
-   			,#{mil_rank}
-   			,#{kosa_reg}
-   			,#{kosa_rank}
-   			,#{enter_date}
-   			,#{leave_date}
-   			,#{empno}
-   			,#{company}
-   			,#{reserv}
-   			,#{introduce}
+   			,#{hp}
+   			,#{carrier}
+   			,#{pos_gbn_code}
+   			,#{cmp_reg_image}
+   			,#{sex}
+   			,#{years}
+   			,#{zip}
+   			,#{addr1}
+   			,#{addr2}
+   			,#{dept_code}
+   			,#{join_gbn_code}
+   			,#{salary}
+   			,#{kosa_reg_yn}
+   			,#{kosa_class_code}
+   			,#{mil_yn}
+   			,#{mil_type}
+   			,#{mil_level}
+   			,#{mil_startdate}
+   			,#{mil_enddate}
+   			,#{job_type}
+   			,#{gart_level}
+   			,#{self_intro}
+   			,#{crm_name}
+   			,#{profile_image}
+   			,#{carrier_image}
+   			,#{cmp_reg_no}
    		)
    </select>
+   
+    <select id="test111" parameterType="kr.co.vo.InsaVO">
+   		INSERT INTO INSA(
+   			sabun
+   			,name
+   			,hp
+   			,reg_no
+   			,email
+   			,id
+   			,pwd
+   		) VALUES (
+   			(SELECT (NVL(MAX(sabun), 0)) + 1 
+   			FROM INSA)
+   			,#{name}
+   			,#{hp}
+   			,#{reg_no}
+   			,#{email}
+   			,#{id}
+   			,#{pwd}
+   		)
+   	</select>
    
    <select id="list" resultType="kr.co.vo.InsaVO">
    		SELECT * FROM
