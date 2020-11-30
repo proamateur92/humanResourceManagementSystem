@@ -1,0 +1,52 @@
+@charset "UTF-8";
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url(/insa/assets/img/back-ground.jpg);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #fff;
+    width: 100%
+}
+
+.top{
+	margin:10px; 
+	padding:10px;
+}
+
+.top_title{
+	font-size: 25px;
+	font-weight: bold;
+}
+
+.top_menu{
+	font-size: 12px;
+}
+
+.contents{
+	margin-top: 200px;
+	margin-bottom: 200px; 
+}
+
+.content_title{
+	margin: 10px; 
+	padding: 10px;
+	font-weight: bold;
+	font-size: 30px;
+}
+
+.content_menu{
+	margin:10px; 
+	padding:10px;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.footer{
+	font-size: 10px;
+}
+

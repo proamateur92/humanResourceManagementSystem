@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import kr.co.service.InsaService;
+import kr.co.vo.FileVO;
 import kr.co.vo.InsaVO;
 import kr.co.vo.comVO;
 
@@ -49,6 +50,7 @@ public class MainController {
 
 	@RequestMapping(value = "/inputForm", method = RequestMethod.POST)
 	public String insaInput(InsaVO insaVO) throws Exception {
+		
 		int check = service.insert(insaVO);
 
 		logger.info(check < 1 ? "N" : "Y");
@@ -56,14 +58,21 @@ public class MainController {
 		return "redirect:/";
 	}
 
-	@RequestMapping(value = "/test", method = RequestMethod.POST)
 	@ResponseBody
-	public void test(InsaVO insaVO) throws Exception {
-				int check = service.insert(insaVO);
-
-				logger.info(check < 1 ? "N" : "Y");
-				
-		service.insert(insaVO);
+	@RequestMapping(value="/fileupload", method=RequestMethod.POST)
+	public FileVO fileUpload(MultipartHttpServletRequest request) throws Exception {
+		MultipartFile file = request.getFile("file");
+		String type = request.getParameter("type");
+		
+		FileVO fileVO = service.uploadFile(file, type);
+		logger.info("1111111111111111");
+		if(fileVO != null) {
+			logger.info("22222222222222222222222222");
+			return fileVO;
+		} else {
+			logger.info("333333333333333333333333333");
+			return null;
+		}
 	}
 	
 	@RequestMapping(value = "/listForm", method = RequestMethod.GET)

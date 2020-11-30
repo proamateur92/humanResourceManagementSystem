@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import kr.co.vo.FileVO;
 import kr.co.vo.InsaVO;
 import kr.co.vo.comVO;
 
@@ -34,4 +35,7 @@ public class InsaDAOImpl implements InsaDAO{
 		return session.selectList("insaMapper.comList");
 	}
 	
+	public int insertFileByFileVo(FileVO fileVo) {
+		return session.insert("insaMapper.insertFileByFileVo", fileVo);
+	}
 }

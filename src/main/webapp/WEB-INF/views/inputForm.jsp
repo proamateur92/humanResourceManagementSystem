@@ -25,8 +25,8 @@
 	
 	<script>
 	var $j = jQuery.noConflict();
+	
 	$j(document).ready(function() {
-			
 			//달력 넣기
 			$j.datepicker.setDefaults({
 		        dateFormat: 'yy-mm-dd',
@@ -43,7 +43,47 @@
 
 			
 		  	$j( function() {
-		  		$j('#datepicker1, #datepicker2, #datepicker3, #datepicker4').datepicker();
+		  		$j('#datepicker1').datepicker({
+		  			showOn: "button",
+		  			buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif",
+		  			onClose: function(selectedDate) {
+		  				let date = new Date(selectedDate);
+		  				date.setDate(date.getDate()+1);
+		  				$j('#datepicker2').datepicker("option", "minDate", date);
+		  			}
+		  		});
+		  		
+		  		$j('#datepicker2').datepicker({
+		  			showOn: "button",
+		  			buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif",
+		  			onClose: function(selectedDate) {
+		  				let date = new Date(selectedDate);
+		  				date.setDate(date.getDate()-1);
+		  				$j("#datepicker1").datepicker( "option", "maxDate", date );
+		  			}
+		  		});
+		  	});
+		  	
+		  	$j( function() {
+		  		$j('#datepicker3').datepicker({
+		  			showOn: "button",
+		  			buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif",
+		  			onClose: function(selectedDate) {
+		  				let date = new Date(selectedDate);
+		  				date.setDate(date.getDate()+1);
+		  				$j('#datepicker4').datepicker("option", "minDate", date);
+		  			}
+		  		});
+		  		
+		  		$j('#datepicker4').datepicker({
+		  			showOn: "button",
+		  			buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif",
+		  			onClose: function(selectedDate) {
+		  				let date = new Date(selectedDate);
+		  				date.setDate(date.getDate()-1);
+		  				$j("#datepicker3").datepicker( "option", "maxDate", date );
+		  			}
+		  		});
 		  	});
 		  	// 달력 끝
 		  	
@@ -86,8 +126,8 @@
 			                   console.log(data.zonecode);
 			                   console.log(fullRoadAddr);
 			                   
-			                   $("[name=zip]").val(data.zonecode);
-			                   $("[name=addr1]").val(fullRoadAddr);
+			                   $j("[name=zip]").val(data.zonecode);
+			                   $j("[name=addr1]").val(fullRoadAddr);
 			                   
 			              }
 			          }).open();
@@ -149,7 +189,7 @@
 			          return tmp;
 			      }
 			      var age = (100-str.substr(0,1)+21);
-			      $("[name=years]").val(age);
+			      $j("[name=years]").val(age);
 			      return str;
 			}
 
@@ -189,26 +229,88 @@
 			//비밀번호 하이픈 끝
 			
 			//프로필 사진 올리기
-			function profileUpload() {
-
-		        var form = jQuery("#ajaxFrom")[0];
-		        var formData = new FormData(form);
-		        formData.append("message", "ajax로 파일 전송하기");
-		        formData.append("file", jQuery("#ajaxFile")[0].files[0]);
-		
-		        jQuery.ajax({
-		              url : "./ajaxFormReceive.php"
-		            , type : "POST"
-		            , processData : false
-		            , contentType : false
-		            , data : formData
-		            , success:function(json) {
-		                var obj = JSON.parse(json);
-		            }
-		        });
-   			}
+			/* 프로필 사진 업로드하면 서버에 저장되고 savename를 저장한다. */
+			$j("#profile_image").change(function(){
+				var formData = new FormData();
+				formData.append("file", $j("#profile_image")[0].files[0]);
+				formData.append("type", "profile_image");
+				
+				$j.ajax({
+					url : "/fileupload",		
+					type : "post",
+					data : formData,
+					processData: false,
+					contentType: false,
+					
+					success : function(fileVO){
+						if (fileVO != null){
+							alert(fileVO.saveName);
+							$j(".img-profile").attr("src", "/" + fileVO.saveName);
+							$j("[name=profile_image]").val(fileVO.saveName);
+						}
+					},
+					error : function(XHR, status, error) {
+						alert("error");
+					}
+				});
+			});
 			//프로필 사진 올리기 끝
 			
+			//프로필 사진 이름
+
+			//프로필 사진 이름 끝
+			  $j("#submit").on("click",function(){
+				  var name = $("[name=name]").val();
+					var id = $("[name=id]").val();
+					var pwd = $("[name=pwd3]").val();
+					var hp = $("[name=hp]").val();
+					var email = $("[name=email]").val();
+					var reg_no = $("[name=reg_no]").val();
+					var pwd_check = $("[name=pwd_check]").val();
+					
+					var r = document.getElementById('pwd3');
+					console.log('pwd: ' + pwd);
+					console.log('id: ' + id);
+					
+					if(name == ''){
+						window.alert("이름을 입력해 주세요.");
+						return false;
+					}
+					if(id == ''){
+						window.alert("아이디를 입력해 주세요.");
+						return false;
+					}
+					if(pwd == ''){
+						window.alert("비밀번호를 입력해 주세요.");
+						return false;
+					}
+					if(hp == ''){
+						window.alert("핸드폰번호를 입력해 주세요.");
+						return false;
+					}
+					if(email == ''){
+						window.alert("이메일을 입력해 주세요.");
+						return false;
+					}
+					if(reg_no == ''){
+						window.alert("주민등록번호를 입력해 주세요.");
+						return false;
+					}
+					
+				  if($("[name=salary]").val() == "" ){
+						$("[name=salary]").val(0);
+					}
+				  if($("[name=years]").val() == "" ){
+						$("[name=years]").val(0);
+					}
+				  if($("[name=zip]").val() == "" ){
+						$("[name=zip]").val(0);
+					}				 
+				 
+				 
+				  
+				  alert('입력완료');
+			  });
 			//script 끝
 	});
 </script>
@@ -238,7 +340,11 @@
 				<form class="input" action="/inputForm" method="post" enctype="multipart/form-data">
 					<table>
 						<tr>
-							<td rowspan="6"><input type="button" onclick="profileUpload();" value="사진올리기"></td>
+							<td rowspan="6">
+								<img src="${contextPath }/resources/img/unknown.png" style="width: 150px; height: 150px;" class="img-thumbnail img-profile"><br>
+								<input type="file" id="profile_image">
+								<input type="hidden" name="profile_image">
+							</td>
 							<td>*사번 <input type="text" disabled="disabled"></td>
 							<td>*한글성명<input type="text" name="name"></td>
 							<td>영문성명<input type="text" name="eng_name"></td>
@@ -247,7 +353,7 @@
 	 						<td>*아이디<input type="text" name="id" id="id"></td>
 							<input type="hidden" name="pwd" id="pwd">
 							<td>*비밀번호<input type="text" name="pwd3" id="pwd3" onKeyup="pwd(this)"></td>
-							<td>비밀번호 확인<input type="text" id="pwd1"></td>
+							<td>비밀번호 확인<input type="text" id="pwd_check"></td>
 						</tr>
 						<tr>
 							<td>*이메일<input type="text" name="email" id="email"></td>
@@ -255,7 +361,7 @@
 							<td>*핸드폰번호<input type="text" name="hp" id="hp" maxlength="13" onKeyup="hpNumber(this)"></td>
 						</tr>
 						<tr>
-							<td>연령<input type="text" name="years" id="years" value="0"></td>
+							<td>연령<input type="text" name="years" id="years"></td>
 							<td>직종체크<select name="job_type">
 									<option value="" selected>--선택--</option>
 										<c:forEach var="com" items="${comList }">
@@ -278,7 +384,7 @@
 						</tr>
 						<tr>
 							<td colspan="3">
-								주소<input type="text" name="zip" placeholder="우편번호" readonly>
+								주소<input type="text" name="zip" id="zip" placeholder="우편번호" readonly>
 								<input type="button" value="주소검색" id="addCheck"> 
 								<input type="text" name="addr1" placeholder="주소" readonly>
 								<input type="text" name="addr2" placeholder="세부주소">
@@ -363,8 +469,8 @@
 										</c:forEach>
 								</select>
 							</td>
-							<td>입영일자<input type="text" name="mil_startdate" id="datepicker1"></td>
-							<td>전역일자<input type="text" name="mil_enddate" id="datepicker2"></td>
+							<td>입영일자<input type="text" name="mil_startdate" id="datepicker1" readonly></td>
+							<td>전역일자<input type="text" name="mil_enddate" id="datepicker2" readonly></td>
 						</tr>
 						<tr>
 							<td>KOSA등록<select name="kosa_reg_yn">
@@ -385,13 +491,14 @@
 										</c:forEach>
 								</select>
 							</td>
-							<td>입사일자<input type="text" name="join_day" id="datepicker3"></td>
-							<td>퇴사일자<input type="text" name="retire_day" id="datepicker4"></td>
+							<td>입사일자<input type="text" name="join_day" id="datepicker3" readonly></td>
+							<td>퇴사일자<input type="text" name="retire_day" id="datepicker4" readonly></td>
 						</tr>
 						<tr>
 							<td>사업자번호<input type="text" name="cmp_reg_no"></td>
 							<td>업체명<input type="text" name="crm_name"></td>
-							<td>사업자등록증<input type="text" name="cmp_reg_image"></td>
+							<td>사업자등록증<input type="text" id="cmp_upload" name="cmp_upload"></td>
+							<input type="hidden" name="cmp_reg_image">
 							<td><input type="button" value="미리보기"><input type="button" value="등록"></td>
 						</tr>
 						<tr>
@@ -403,7 +510,7 @@
 					</table>
 					
 					<input type="button" value="전화면" id="mainView">
-					<input type="submit" value="등록">
+					<input type="submit" id="submit" value="등록">
 					<input type="reset" value="취소">
 				</form>
             </div>

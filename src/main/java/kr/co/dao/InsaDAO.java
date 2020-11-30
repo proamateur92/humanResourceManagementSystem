@@ -2,6 +2,7 @@ package kr.co.dao;
 
 import java.util.List;
 
+import kr.co.vo.FileVO;
 import kr.co.vo.InsaVO;
 import kr.co.vo.comVO;
 
@@ -15,4 +16,6 @@ public interface InsaDAO {
 	
 	//공통 리스트
 	public List<comVO> comList() throws Exception;
+	
+	public int insertFileByFileVo(FileVO fileVo) throws Exception;
 }

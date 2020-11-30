@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+.control-label {
+	font-size: 10px;
+}
+
+.img-profile {
+	width: 130px;
+	height: 170px;
+}
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    text-align: center;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
