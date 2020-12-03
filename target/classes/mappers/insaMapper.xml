@@ -3,6 +3,10 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="insaMapper">
+   <select id="sabunCheck" resultType="int">
+   		SELECT NVL(MAX(SABUN),0)+1 FROM INSA
+   </select>
+   
    <select id="insert" parameterType="kr.co.vo.InsaVO">
    		INSERT INTO INSA(
    			sabun
@@ -39,7 +43,6 @@
    			,self_intro
    			,crm_name
    			,profile_image
-   			,carrier_image
    			,cmp_reg_no
    		) VALUES (
    			(SELECT (NVL(MAX(sabun), 0)) + 1 
@@ -77,31 +80,9 @@
    			,#{self_intro}
    			,#{crm_name}
    			,#{profile_image}
-   			,#{carrier_image}
    			,#{cmp_reg_no}
    		)
    </select>
-   
-    <select id="test111" parameterType="kr.co.vo.InsaVO">
-   		INSERT INTO INSA(
-   			sabun
-   			,name
-   			,hp
-   			,reg_no
-   			,email
-   			,id
-   			,pwd
-   		) VALUES (
-   			(SELECT (NVL(MAX(sabun), 0)) + 1 
-   			FROM INSA)
-   			,#{name}
-   			,#{hp}
-   			,#{reg_no}
-   			,#{email}
-   			,#{id}
-   			,#{pwd}
-   		)
-   	</select>
    
    <select id="list" resultType="kr.co.vo.InsaVO">
    		SELECT * FROM
@@ -111,6 +92,18 @@
    <select id="comList" resultType="kr.co.vo.comVO">
    		SELECT * FROM
    		INSA_COM
+   </select>
+   
+   <select id="idChecking" resultType="Integer" parameterType="String">
+   		SELECT COUNT(*)
+   		FROM INSA
+   		WHERE ID =#{ID}
+   </select>
+   
+   <select id="loadSabun" parameterType="kr.co.vo.InsaVO" resultType="kr.co.vo.InsaVO">
+   		SELECT *
+   		FROM INSA
+   		WHERE SABUN =#{SABUN}
    </select>
    
    <select id="update" parameterType="kr.co.vo.comVO">
@@ -206,4 +199,21 @@
 	    							#{fileSize})
 		]]>
 	</insert>
+	
+	<!-- 인사테이블을 등록한 후에 files테이블에 sabun을 추가해줌 -->
+	<update id="updateFileBySabunAndOrgName" parameterType="map">
+		<![CDATA[
+			UPDATE 	files 
+			SET 	sabun = #{sabun}
+			WHERE 	saveName = #{saveName}
+		]]>
+	</update>
+	
+	<!-- 사원 삭제 -->
+	<select id="deleteSabun" parameterType="kr.co.vo.InsaVO" resultType="integer">
+		DELETE 
+		FROM
+		INSA
+		WHERE SABUN=#{sabun}
+	</select>
 </mapper>

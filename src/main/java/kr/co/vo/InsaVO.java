@@ -1,6 +1,5 @@
 package kr.co.vo;
 
-
 public class InsaVO {
 	private int sabun;
 	private String join_day;
@@ -36,8 +35,8 @@ public class InsaVO {
     private String self_intro;
     private String crm_name;
     private String profile_image;
-    private String carrier_image;
     private String cmp_reg_no;
+    
 	public String getCmp_reg_no() {
 		return cmp_reg_no;
 	}
@@ -248,11 +247,4 @@ public class InsaVO {
 	public void setProfile_image(String profile_image) {
 		this.profile_image = profile_image;
 	}
-	public String getCarrier_image() {
-		return carrier_image;
-	}
-	public void setCarrier_image(String carrier_image) {
-		this.carrier_image = carrier_image;
-	}
-    
 }

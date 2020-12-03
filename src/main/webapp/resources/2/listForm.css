@@ -1,0 +1,22 @@
+.icon-frm {
+	width: 25px;
+	height: 25px;
+}
+.center {
+	text-align: center;
+}
+.select-center {
+	vertical-align: middle;
+	text-align-last: center;
+}
+.in-blk {
+	display: inline-block;
+}
+.dnone {
+	display: none;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

@@ -51,7 +51,6 @@ public class InsaServiceImpl implements InsaService{
 		String saveName = System.currentTimeMillis() + UUID.randomUUID().toString() + exName;
 		String filePath = saveDir + "\\" + saveName;
 		long fileSize = file.getSize();
-		
 		FileVO fileVo = new FileVO();
 		fileVo.setFileType(fileType);
 		fileVo.setFilePath(filePath);
@@ -82,5 +81,29 @@ public class InsaServiceImpl implements InsaService{
 			System.out.println("파일 업로드 실패");
 			return null;
 		}
+	}
+
+	@Override
+	public int updateFile(int sabun, String saveName) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.updateFile(sabun, saveName);
+	}
+
+	@Override
+	public int sabunCheck() throws Exception {
+		// TODO Auto-generated method stub
+		return dao.sabunCheck();
+	}
+
+	@Override
+	public int idChecking(String id) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.idChecking(id);
+	}
+
+	@Override
+	public int deleteSabun(InsaVO insaVO) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.deleteSabun(insaVO);
 	}
 }

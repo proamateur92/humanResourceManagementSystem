@@ -16,4 +16,12 @@ public interface InsaService {
 	public List<comVO> comList() throws Exception;
 	
 	public FileVO uploadFile(MultipartFile file, String fileType) throws Exception;
+	
+	public int updateFile(int sabun, String saveName) throws Exception;
+	
+	public int sabunCheck() throws Exception;
+	
+	public int idChecking(String id) throws Exception;
+	
+	public int deleteSabun(InsaVO insaVO) throws Exception;
 	}

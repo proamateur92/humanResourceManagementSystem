@@ -23,25 +23,73 @@
 <script src="https://kit.fontawesome.com/c1651245ed.js"
 	crossorigin="anonymous"></script>
 <script>
-	
+		function button2() {
+			location.replace("/listForm");
+		}	
+
 		function button3() {
 			location.href="/";
 		}
 		
+		function update() {
+			var leng = $("input:checkbox[name=sabun]:checked").length;
+			
+			if(leng!=1){
+				alert("한명의 사원만 체크해주세요.");
+				return false;
+			}
+			
+			var sabun = $("input:checkbox[name='sabun']:checked").val();
+			
+			location.href= "/update?sabun="+sabun;
+		}
 		
+		function delete_m() {
+			
+			var leng = $("input:checkbox[name=sabun]:checked").length;
+			
+			if(leng!=1){
+				alert("한명의 사원만 체크해주세요.");
+				return false;
+			}
+
+			result = confirm("삭제하시겠습니까?");
+			
+			if(!result){
+				return false;
+			}
+			
+			var sabun = $("input:checkbox[name='sabun']:checked").val();
+			
+			$.ajax({
+				url : "/delete",		
+				type : "post",
+				data : {"sabun":sabun},
+				
+				success : function(data){
+					console.log(data);
+					if(data==1){
+						alert("삭제 성공");
+						location.href = "/listForm";
+					} else{
+						alert("삭제 실패");
+					}
+				},
+				error : function(XHR, status, error) {
+					alert("데이터 전달이 올바르지 않습니다.");
+				}
+			});
+		}
 </script>
 </head>
 
 <body id="page-top">
-
 	<!-- Page Wrapper -->
 	<div id="wrapper">
 		<!-- Content Wrapper -->
 		<div id="content-wrapper" class="d-flex flex-column">
-
 			<!-- Main Content -->
 			<div id="content">
-
 				<!-- Topbar -->
 				<nav
 					class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -56,17 +104,20 @@
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
-					사번<input type="text"> 성명<input type="text"> 입사구분<input
-						type="text"> 투입여부<input type="text"> 직위<input
-						type="text"> 입사일자<input type="text"> 퇴사일자<input
-						type="text"> 직종분류<input type="text"> <input
-						type="button" value="검색"> <input type="button" value="초기화">
+					사번<input type="text"> 성명<input type="text"> 입사구분
+					<input type="text"> 투입여부<input type="text"> <br>직위
+					<input type="text"> 입사일자<input type="text"> 퇴사일자
+					<input type="text"> 직종분류<input type="text"> 
+					<input type="button" value="검색"> 
+					<input type="button" value="초기화" onclick="button2();">
 					<input type="button" value="전화면" onclick="button3();">
 
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
-							<h6 class="m-0 font-weight-bold text-primary">직원리스트</h6>
+							<h4 class="m-0 font-weight-bold text-primary">직원리스트</h4>
+							<input type="button" value="수정" style="float: right;" onclick="update();">
+							<input type="button" value="삭제" style="float: right;" onclick="delete_m();">
 						</div>
 						<div class="card-body">
 							<div class="table-responsive">
@@ -101,7 +152,7 @@
 									<tbody>
 										<c:forEach var="insa" items="${list }">
 											<tr>
-												<td>${insa.sabun }</td>
+												<td><input type='checkbox' name="sabun" value="${insa.sabun }" />${insa.sabun }</td>
 												<td>${insa.name }</td>
 												<td>${insa.reg_no }</td>
 												<td>${insa.hp }</td>

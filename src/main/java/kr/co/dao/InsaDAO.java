@@ -17,5 +17,18 @@ public interface InsaDAO {
 	//공통 리스트
 	public List<comVO> comList() throws Exception;
 	
+	//이미지 파일 추가
 	public int insertFileByFileVo(FileVO fileVo) throws Exception;
+	
+	//이미지 파일 생성 시 사번 부여
+	public int updateFile(int sabun, String saveName) throws Exception;
+	
+	//현재 사번의 최대값 
+	public int sabunCheck() throws Exception;
+	
+	//아이디 중복체크
+	public int idChecking(String id) throws Exception;
+	
+	//사원 삭제
+	public int deleteSabun(InsaVO insaVO) throws Exception;
 }

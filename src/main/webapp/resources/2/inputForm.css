@@ -1,0 +1,40 @@
+.uploadResult {
+	width: 100%;
+	height: 132px;
+	text-align: center;
+	margin: 0 auto;
+}
+.img-frm {
+	height: 100%;
+	width: auto;
+}
+.icon-frm {
+	width: 25px;
+	height: 25px;
+}
+.center {
+	text-align: center;
+}
+.select-center {
+	vertical-align: middle;
+	text-align-last: center;
+}
+.in-blk {
+	display: inline-block;
+}
+.addr-h {
+	height: 37.5px;
+	margin-bottom: auto;
+}
+.div-in-modal {
+	width: 300px;
+	height: 400px;
+}
+.dnone {
+	display: none;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+header .container > div {margin-top: 20px;}
+footer * {text-align: center; margin: 0;}
+section {min-height: 500px;}
+a {text-decoration: none;}
+li {list-style: none;}
+table {width: 100%;}
+th {text-align: center;}
+.tbl_memberList td {border-top: 1px solid #333; border-bottom: 1px solid #333; border-collapse: collapse; text-align: center;}
+
+body.index {background: #333;}
+body.index * {color: #ccc; vertical-align: bottom;}
+body.index .btn-light {color: #333;}
+body.index header a {margin: 0 15px;}
+body.index section a {margin: 0 10px;}
+body.index a:hover {color: #fff; border-bottom: 1px solid #fff;}
+body.index .menu {padding-top: 10px;}
+body.index section div:last-child {
+	padding: 100px;
+}
+body.index section a {vertical-align: initial;}
+body.index section h2 {padding-bottom: 20px;}
+
+form {width: 100%;}
+textarea {width: 100%; resize: none;}
+
+.profile {margin: 5px auto;}
+.profile-img {width: 100%}
+
+div.uploadResult {width: 100%; height: 163px; align-items: center; margin: 0 auto; border: 1px solid #ddd;}
+
+

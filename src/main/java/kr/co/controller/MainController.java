@@ -1,13 +1,11 @@
 package kr.co.controller;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStreamReader;
+import java.io.FileInputStream;
+import java.io.OutputStream;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -45,36 +44,67 @@ public class MainController {
 		List<comVO> list = service.comList();
 
 		model.addAttribute("comList", list);
-		return "inputForm";
+		
+		return "inputForm4";
 	}
 
 	@RequestMapping(value = "/inputForm", method = RequestMethod.POST)
-	public String insaInput(InsaVO insaVO) throws Exception {
-		
-		int check = service.insert(insaVO);
+	public String insaInput(@RequestParam String email2,InsaVO insaVO, Model model) throws Exception {
+		String email = insaVO.getEmail();
+		email += "@" + email2;
 
+		insaVO.setEmail(email);
+		int check = service.insert(insaVO);
+		int nowSabun = service.sabunCheck()-1;
+		
+		if(check == 1) {
+			if(!insaVO.getProfile_image().equals("")) {
+				service.updateFile(nowSabun, insaVO.getProfile_image());
+			}
+			if(!insaVO.getCarrier().equals("")) {
+				service.updateFile(nowSabun, insaVO.getCarrier());
+			}
+			if(!insaVO.getCmp_reg_image().equals("")) {
+				service.updateFile(nowSabun, insaVO.getCmp_reg_image());
+			}
+		}
+		logger.info("현재사번~~~~~~~~~~"+ Integer.toString(nowSabun));
 		logger.info(check < 1 ? "N" : "Y");
 
+//		model.addAttribute();
+		
 		return "redirect:/";
 	}
 
+	//파일 업로드
 	@ResponseBody
 	@RequestMapping(value="/fileupload", method=RequestMethod.POST)
 	public FileVO fileUpload(MultipartHttpServletRequest request) throws Exception {
 		MultipartFile file = request.getFile("file");
 		String type = request.getParameter("type");
 		
-		FileVO fileVO = service.uploadFile(file, type);
-		logger.info("1111111111111111");
-		if(fileVO != null) {
-			logger.info("22222222222222222222222222");
-			return fileVO;
+		FileVO fileVo = service.uploadFile(file, type);
+		
+		if(fileVo != null) {
+			logger.info("성공!");
+			return fileVo;
 		} else {
-			logger.info("333333333333333333333333333");
+			logger.info("실패 ㅠ");
 			return null;
 		}
 	}
 	
+	//아이디 중복확인
+	@ResponseBody
+	@RequestMapping(value="/checkId", method=RequestMethod.GET)
+	public int idCheck(@RequestParam String id) throws Exception{
+		int check = 0;
+		
+		check = service.idChecking(id);
+		return check;
+	}
+	
+	//직원 목록
 	@RequestMapping(value = "/listForm", method = RequestMethod.GET)
 	public String listForm(Model model) throws Exception {
 
@@ -85,5 +115,32 @@ public class MainController {
 		model.addAttribute("list", list);
 
 		return "listForm2";
+	}
+	
+	//직원 삭제
+	@ResponseBody
+	@RequestMapping(value="/delete", method=RequestMethod.POST)
+	public int deleteSabun(InsaVO insaVO) throws Exception {
+		
+		logger.info(Integer.toString(insaVO.getSabun()));
+		int check = service.deleteSabun(insaVO);
+	
+		return check;
+	}
+	
+	//직원 수정
+	@RequestMapping(value="/update", method=RequestMethod.GET)
+	public String updatePage() throws Exception {
+		
+		return "updateForm";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/update", method=RequestMethod.POST)
+	public int updateSabun(InsaVO insaVO) throws Exception {
+		
+		int check = 0;
+		
+		return check;
 	}
 }

@@ -1,6 +1,8 @@
 package kr.co.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -37,5 +39,32 @@ public class InsaDAOImpl implements InsaDAO{
 	
 	public int insertFileByFileVo(FileVO fileVo) {
 		return session.insert("insaMapper.insertFileByFileVo", fileVo);
+	}
+
+	@Override
+	public int updateFile(int sabun, String saveName) throws Exception {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("sabun", sabun);
+		map.put("saveName", saveName);
+		return session.update("insaMapper.updateFileBySabunAndOrgName", map);
+	}
+
+	@Override
+	public int sabunCheck() throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectOne("insaMapper.sabunCheck");
+	}
+
+	@Override
+	public int idChecking(String id) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectOne("insaMapper.idChecking", id);
+	}
+
+	@Override
+	public int deleteSabun(InsaVO insaVO) throws Exception {
+		// TODO Auto-generated method stub
+		return session.delete("insaMapper.deleteSabun", insaVO);
 	}
 }
