@@ -1,29 +1,3 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath }" />
-<!DOCTYPE html>
-<html>
-<head>
- <title>작성 폼</title>
-
-
-    <!-- Custom styles for this template -->
-	<script src="https://kit.fontawesome.com/c1651245ed.js" crossorigin="anonymous"></script>
-	
-	 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-		<!-- bootstrap css -->
-	<link href="${contextPath }/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	
-	<!-- bootstrap datepicker -->
-	<link href="${contextPath }/assets/css/datepicker3.css" rel="stylesheet">
-	
-	<!-- index css -->
-	<link href="${contextPath }/assets/css/input.css" rel="stylesheet">
-	
-	<script>
 	var $j = jQuery.noConflict();
 	var now = new Date();
 	var nowYear = now.getFullYear();
@@ -138,9 +112,57 @@
 			});
 			// 다음 주소 끝
 			
+			// 한글 이름
+			$j("#name").on('focusout', function(){
+				var name = $j(this).val();
+			    var check = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+				
+				if(check.test(name)){
+					return;
+				} else{
+					alert("한글만 입력 가능합니다.");
+					$j("#name").val("");
+					$j("#name").focus();
+					return;
+				}
+			});
+			// 한글 이름 끝
+			
+			// 영문 이름
+			$j("#eng_name").on('focusout', function(){
+				var eng_name = $j(this).val();
+			    var check = /[a-z|A-Z]/;
+				
+				if(check.test(eng_name)){
+					return;
+				} else{
+					alert("영문만 입력 가능합니다.");
+					$j("#eng_name").val("");
+					return;
+				}
+			});
+			// 영문 이름 끝
+
+			// 이메일 유효성
+			$j("#emaila").on('focusout', function(){
+				var emaila = $j(this).val();
+			    var check = /[a-z|A-Z|0-9]/;
+				
+				if(check.test(emaila)){
+					return;
+				} else{
+					alert("영문 또는 숫자만 입력 가능합니다.");
+					$j("#emailCheck").val("");
+					return;
+				}
+			});
+			// 이메일 유효성 끝
+			
 			//폰번호 하이픈
 			var autoHypenPhone = function(str){
-			      str = str.replace(/[^0-9]/g, '');
+				
+				  str = str.replace(/[^0-9]/g, '');
+
 			      var tmp = '';
 			      if( str.length < 4){
 			          return str;
@@ -166,6 +188,7 @@
 			      }
 			      return str;
 			}
+			
 			var phoneNum = document.getElementById('hp');
 			phoneNum.onkeyup = function(){
 			  console.log(this.value);
@@ -173,6 +196,47 @@
 			}
 				
 			//폰번호 하이픈 끝
+			
+			//사업자 하이픈
+			var autoHypenCmp = function(str){
+				
+				  if(str.length<2&&str==0) {
+			      	str = str.replace(/[^1-9]/g, '');
+				  }
+
+				  str = str.replace(/[^0-9]/g, '');
+			      var tmp = '';
+			      if( str.length < 4){
+			          return str;
+			      }else if(str.length < 5){
+			          tmp += str.substr(0, 3);
+			          tmp += '-';
+			          tmp += str.substr(3);
+			          return tmp;
+			      }else if(str.length < 10){
+			          tmp += str.substr(0, 3);
+			          tmp += '-';
+			          tmp += str.substr(3, 2);
+			          tmp += '-';
+			          tmp += str.substr(5);
+			          return tmp;
+			      }else{
+			          tmp += str.substr(0, 3);
+			          tmp += '-';
+			          tmp += str.substr(3, 2);
+			          tmp += '-';
+			          tmp += str.substr(5);
+			          return tmp;
+			      }
+			      return str;
+			}
+			var cmpNo = document.getElementById('cmp_reg_no');
+			cmpNo.onkeyup = function(){
+			  console.log(this.value);
+			  this.value = autoHypenCmp( this.value ) ;  
+			}
+				
+			//사업자 하이픈 끝
 			
 			//연봉 ,
 			var autoCheck = function(num){
@@ -194,14 +258,14 @@
 			//연봉 , 끝
 			
 			//주민번호 *
-			$("#reg_no_input").on("keydown", function(e) {
+			$j("#reg_no_input").on("keydown", function(e) {
 		var code = e.keyCode;
 
 		if (!((code >= 48 && code <= 57) || (code >= 96 && code <= 105))) {
 			if (code == 8 || code == 46 || code == 27) {
-				$("#reg_no").val("");
-				$("#reg_no_input").val("");
-				$("#years").val("");
+				$j("#reg_no").val("");
+				$j("#reg_no_input").val("");
+				$j("#years").val("");
 				reg_no_arr = [];
 			} else if (code == 9) {
 				return;
@@ -210,7 +274,7 @@
 			}
 		}
 	}).on("keyup", function(e) {
-		var reg_no = $("#reg_no_input").val();
+		var reg_no = $j("#reg_no_input").val();
 		var key = reg_no.replace(/\-/g, '');
 		var num = "";
 		var star_num = "";
@@ -218,13 +282,13 @@
 		var hidden_num = "";
 		var code = e.keyCode;
 
-		if ($("#reg_no").val().length == 14)
+		if ($j("#reg_no").val().length == 14)
 			return;
 
 		if ((code >= 48 && code <= 57) || (code >= 96 && code <= 105)) {
 			if (key.length < 7) {
-				$(this).val(key);
-			} else if (key.length >= 7 && key.length < 15) {
+				$j(this).val(key);
+			} else if (key.length >= 7 && key.length < 14) {
 				reg_no_arr.push(key_num);
 				var post_reg_no = key.substr(6, 7);
 				for (i = 0; i < post_reg_no.length - 1; i++) {
@@ -235,46 +299,39 @@
 				num += "-";
 				num += key.substr(6, 1);
 				num += star_num;
-				num += key.substr(12, 2);
-				$(this).val(num);
+				num += key.substr(13, 1);
+				$j(this).val(num);
 			}
 
 			hidden_num += key.substr(0, 6);
 			hidden_num += "-";
 			hidden_num += reg_no_arr.join("");
-			$("#reg_no").val(hidden_num);
+			$j("#reg_no").val(hidden_num);
 		} else {
 			e.preventDefault();
 		}
 	}).on("focusin", function() {
-		$("#reg_no").val("");
-		$("#reg_no_input").val("");
-		$("#years").val("");
+		$j("#reg_no").val("");
+		$j("#reg_no_input").val("");
+		$j("#years").val("");
 		reg_no_arr = [];
 	});
-	 console.log("reg_no_in: " + $("#reg_no_input").val());
-	 console.log("reg_no   : " + $("#reg_no").val());
-			
-			
 			// reg_no 뒷부분 입력시 * 처리
 			
 			
 			// 주민등록번호 유효성 검사
-			$("#reg_no_input").on('focusout', function() { // 포커스를 잃었을때 실행합니다.
-				var regNo = $("#reg_no").val().replace("-", "");
+			$j("#reg_no_input").on('focusout', function() { // 포커스를 잃었을때 실행합니다.
+				var regNo = $j("#reg_no").val().replace("-", "");
 		
 				if (ssnConfirm(regNo)) {
 					// 나이 대입..
 					getAge(regNo);
 		
-					// 하이픈 입력
-								regNo = regNo.replace(/^([0-9]{6})-?([0-9]{7})$/, "$1-$2");
-								$(this).val(regNo);
 		
 				} else {
-					$("#reg_no_input").val("");
-					$("#reg_no").val("");
-					$(this).focus();
+					$j("#reg_no_input").val("");
+					$j("#reg_no").val("");
+					$j(this).focus();
 				}
 			});
 			
@@ -286,10 +343,10 @@
 		var n2 = j2.substr(0, 1); // 뒤 7자리에 입력한 값중 맨앞의 글자를 n2 에 대입(1~4)
 
 		if (n2 == 1 || n2 == 2) { // 뒤 첫째값이 1, 2일 경우(1900년대에 출생한 남녀)
-			$("#years").val(nowYear - (1900 + Number(n1)));
+			$j("#years").val(nowYear - (1900 + Number(n1)));
 		}
 		if (n2 == 3 || n2 == 4) { // 뒤 첫째값이 3, 4일 경우
-			$("#years").val(nowYear - (2000 + Number(n1)));
+			$j("#years").val(nowYear - (2000 + Number(n1)));
 		}
 	};
 			
@@ -331,8 +388,33 @@
 		}
 	}
 	
-			// password 입력시 * 표시
-			$("#pwd_input")
+	// ID 중복체크
+	$j("#id").on('focusout', function(e) {
+	
+		var id = $j(this).val();
+		if (id == '')
+			return;
+
+		$j.ajax({
+			url : '/checkId?id=' + id,
+			type : 'get',
+			success : function(data) {
+				console.log(data > 0 ? '아이디 중복' : '아이디 사용가능');
+				if (data > 0) {
+					alert("중복되는 id가 있습니다. 다른 id를 사용해주세요.");
+					$j("#id").val("");
+					$j("#id").focus();
+					return;
+				} else {
+					alert("사용가능한 아이디 입니다.")
+					return;
+				}
+			}
+		})
+	});
+	
+	// password 입력시 * 표시
+			$j("#pwd_input")
 					.on(
 							"keydown",
 							function(e) {
@@ -341,8 +423,8 @@
 								if (!((code >= 48 && code <= 57)
 										|| (code >= 96 && code <= 105) || (code >= 65 && code <= 90))) {
 									if (code == 8 || code == 46 || code == 27) {
-										$("#pwd").val("");
-										$("#pwd_input").val("");
+										$j("#pwd").val("");
+										$j("#pwd_input").val("");
 										pwd_arr = [];
 									} else if (code == 9) {
 										return;
@@ -353,7 +435,7 @@
 							}).on(
 							"keyup",
 							function(e) {
-								var pwd = $("#pwd");
+								var pwd = $j("#pwd");
 								var key = pwd.val().replace(/^[a-zA-Z-0-9]$/g, '');
 								var num = "";
 								var star_num = "";
@@ -367,7 +449,7 @@
 								if ((code >= 48 && code <= 57)
 										|| (code >= 96 && code <= 105)
 										|| (code >= 65 && code <= 90)) {
-									$(this).val(key);
+									$j(this).val(key);
 									pwd_arr.push(key_num);
 									for (i = 0; i < post_pwd.length - 1; i++) {
 										star_num += "*";
@@ -375,18 +457,18 @@
 												pwd.val().substr(0, post_pwd.length),
 												star_num);
 									}
-									$(this).val(replace + key_num);
+									$j(this).val(replace + key_num);
 									hidden_num += pwd_arr.join("");
 								}
-								$("#pwd").val(hidden_num);
+								$j("#pwd").val(hidden_num);
 							}).on("focusin", function() {
-						$("#pwd").val("");
-						$("#pwd_input").val("");
+						$j("#pwd").val("");
+						$j("#pwd_input").val("");
 						pwd_arr = [];
 					});
 			
 			// password_ck 입력시 * 표시
-			$("#pwd_ck_input")
+			$j("#pwd_ck_input")
 			.on(
 					"keydown",
 					function(e) {
@@ -395,8 +477,8 @@
 						if (!((code >= 48 && code <= 57)
 								|| (code >= 96 && code <= 105) || (code >= 65 && code <= 90))) {
 							if (code == 8 || code == 46 || code == 27) {
-								$("#pwd_ck").val("");
-								$("#pwd_ck_input").val("");
+								$j("#pwd_ck").val("");
+								$j("#pwd_ck_input").val("");
 								pwd_ck_arr = [];
 							} else if (code == 9) {
 								return;
@@ -407,7 +489,7 @@
 					}).on(
 							"keyup",
 							function(e) {
-								var pwd = $("#pwd_ck");
+								var pwd = $j("#pwd_ck");
 								var key = pwd.val().replace(/^[a-zA-Z-0-9]$/g, '');
 								var num = "";
 								var star_num = "";
@@ -420,7 +502,7 @@
 								if ((code >= 48 && code <= 57)
 										|| (code >= 96 && code <= 105)
 										|| (code >= 65 && code <= 90)) {
-									$(this).val(key);
+									$j(this).val(key);
 									pwd_ck_arr.push(key_num);
 									for (i = 0; i < post_pwd.length - 1; i++) {
 										star_num += "*";
@@ -428,17 +510,33 @@
 												pwd.val().substr(0, post_pwd.length),
 												star_num);
 									}
-									$(this).val(replace + key_num);
+									$j(this).val(replace + key_num);
 									hidden_num += pwd_ck_arr.join("");
 								}
-								$("#pwd_ck").val(hidden_num);
+								$j("#pwd_ck").val(hidden_num);
 							}).on("focusin", function() {
-								$("#pwd_ck").val("");
-								$("#pwd_ck_input").val("");
+								$j("#pwd_ck").val("");
+								$j("#pwd_ck_input").val("");
 								pwd_ck_arr = [];
 							});
 			
-		
+			// 비밀번호 확인 체크
+			$j("#pwd_ck_input").on('focusout', function() {
+				var pwd = $j("#pwd").val();
+				var pwd_ck = $j("#pwd_ck").val();
+				if (pwd_ck == '')
+					return;
+
+				if (pwd == pwd_ck) {
+					return;
+				} else {
+					alert("패스워드가 일치하지 않습니다");
+					$j("#pwd_ck").val("");
+					$j("#pwd_ck_input").val("");
+					pwd_ck_arr = [];
+					$j("#pwd_ck_input").focus();
+				}
+			});
 			
 			//프로필 사진 올리기
 			/* 프로필 사진 업로드하면 서버에 저장되고 savename를 저장한다. */
@@ -456,8 +554,7 @@
 					
 					success : function(fileVO){
 						if (fileVO != null){
-							alert(fileVO.saveName);
-							$j(".img-profile").attr("src", "/" + fileVO.saveName);
+							console.log(fileVO.saveName);
 							$j("[name=profile_image]").val(fileVO.saveName);
 						}
 					},
@@ -486,10 +583,9 @@
 							var link = "/upload";
 							link += fileVo.saveName;
 							
-							$("[name=cmp_reg_image]").val(fileVo.saveName);
+							$j("[name=cmp_org_name]").val(fileVo.orgName);
+							$j("[name=cmp_reg_image]").val(fileVo.saveName);
 							
-							$("#cmpDown").attr({target: "_blank",
-								href: link});
 						}
 					},
 					error : function(XHR, status, error) {
@@ -500,10 +596,10 @@
 			//사업자 등록증 사진 올리기 끝
 			
 			//이력서 사진 올리기
-			$j("#carrier_image").change(function(){
+			$j("#carrier").change(function(){
 				var formData = new FormData();
-				formData.append("file", $j("#carrier_image")[0].files[0]);
-				formData.append("type", "carrier_image");
+				formData.append("file", $j("#carrier")[0].files[0]);
+				formData.append("type", "carrier");
 				
 				$j.ajax({
 					url : "/fileupload",		
@@ -517,9 +613,9 @@
 							var link = "/upload";
 							link += fileVo.saveName;
 							
-							$("[name=carrier_image]").val(fileVo.saveName);
-							
-							$("#cmpDown").attr({target: "_blank",
+							$j("[name=carrier_org_name]").val(fileVo.orgName);
+							$j("[name=carrier]").val(fileVo.saveName);
+							$j("#carrierDown").attr({target: "_blank",
 								href: link});
 						}
 					},
@@ -530,39 +626,208 @@
 			});
 			//이력서 사진 올리기 끝
 			
+			  // 이미지 업로드
+		    $j("#profile_image").on("change", handleImgFileSelect1);
+		
+		    function handleImgFileSelect1(e) {
+		        var files = e.target.files;
+		        var filesArr = Array.prototype.slice.call(files);
+		
+		        filesArr.forEach(function(f) {
+		            if(!f.type.match("image.*")) {
+		                alert("확장자는 이미지 확장자만 가능합니다.");
+		                return;
+		            }
+		
+		            sel_file = f;
+		
+		            var reader = new FileReader();
+		            reader.onload = function(e) {
+		                $j(".img-profile").attr("src", e.target.result);
+		            }
+		            reader.readAsDataURL(f);
+		        });
+		    }
+		    
+		    //사업자등록증 사진띄우기
+		    $j("#cmp_reg_image").on("change", handleImgFileSelect2);
+		    			
+		 		    function handleImgFileSelect2(e) {
+		 		        var files = e.target.files;
+		 		        var filesArr = Array.prototype.slice.call(files);
+		 		
+		 		        filesArr.forEach(function(f) {
+		 		            if(!f.type.match("image.*")) {
+		 		                alert("확장자는 이미지 확장자만 가능합니다.");
+		 		                return;
+		 		            }
+		 		            sel_file = f;
+		 		            var reader = new FileReader();
+		 		            reader.onload = function(e) {
+		 		                $j(".cmp-thumbnail").attr("src", e.target.result);
+		 		            }
+		 		            reader.readAsDataURL(f);
+		 		        });
+		 		    }
+		    //사업자등록증 사진업로드 끝
+		    
+		    //이력서 사진띄우기
+		    $j("#carrier").on("change", handleImgFileSelect3);
+		    			
+		 		    function handleImgFileSelect3(e) {
+		 		        var files = e.target.files;
+		 		        var filesArr = Array.prototype.slice.call(files);
+		 		
+		 		        filesArr.forEach(function(f) {
+		 		            if(!f.type.match("image.*")) {
+		 		                alert("확장자는 이미지 확장자만 가능합니다.");
+		 		                return;
+		 		            }
+		 		            sel_file = f;
+		 		            var reader = new FileReader();
+		 		            reader.onload = function(e) {
+		 		                $j(".carrier-thumbnail").attr("src", e.target.result);
+		 		            }
+		 		            reader.readAsDataURL(f);
+		 		        });
+		 		    }
+		    //이력서 사진업로드 끝
+		 		    
+		    //이력서 모달창
+		    $j('#openCmp').click(function(){
+		    		$j("#modal").show();
+			});
+		    
+		    $j('#close').click(function(){
+			    	$j('.searchModal').hide();
+		    });
+		    //이력서 모달창 끝
+
+		 	//이력서 모달창 
+		 	$j('#openCarrier').click(function(){
+		    		$j("#modal_1").show();
+			});
+		    
+		    $j('#close_1').click(function(){
+			    	$j('.searchModal1').hide();
+		    });
+		    //이력서 모달창 끝
+		    
 			//이메일 직접입력 시
-			$('#emailCheck').change(function(){ 
-				$("#emailCheck option:selected").each(function () { 
-					if($(this).val()== '0'){ 
+			$j('#emailCheck').change(function(){ 
+				$j("#emailCheck option:selected").each(function () { 
+					if($j(this).val()== '0'){ 
 						//직접입력일 경우 
-						$("#emaila").val(''); 
+						$j("#emaila").val(''); 
 						//값 초기화 
-						$("#emaila").attr("disabled",false); 
+						$j("#emaila").attr("disabled",false); 
 						//활성화 
 						}else{ 
 							//직접입력이 아닐경우 
-							$("#emaila").val($(this).text());
+							$j("#emaila").val($j(this).text());
 							//선택값 입력 
-							$("#emaila").attr("disabled",true); 
+							$j("#emaila").attr("disabled",true); 
 							//비활성화 
-							
+							var emailCheck = $j("[name=emailCheck]").val();
+							$j("[name=email2]").val(emailCheck);
 						} 
 					}); 
 				});
 
 			//이메일 직접입력 시 끝
 			
+			// 군필 여부에 따라 disabled 속성 부여 및 제거
+			if ($j("#mil_yn").val() != 201) {
+				$j("#mil_type_val").val("0");
+				$j("#mil_type_level").val("");
+
+				$j("#mil_type_val, #mil_level_val, #mil_startdate, #mil_enddate").attr(
+						"disabled", true);
+			};
+		
+			$j("#mil_yn").on(
+					"change",
+					function() {
+						if ($j("#mil_yn").val() != 201) {
+							$j("#mil_type_val, #mil_level_val").val("");
+							$j("#mil_type_val, #mil_level_val, #mil_startdate, #mil_enddate")
+									.attr("disabled", true);
+							return;
+						} else {
+							$j("#mil_type_val, #mil_level_val, #mil_startdate, #mil_enddate")
+									.attr("disabled", false);
+							return;
+						}
+					});
+			
+			// KOSA 등록여부에 따라 KOSA 등급 input창을 비활성화
+			if ($j("#kosa_reg_yn").val() != 1101) {
+				$j("#kosa_class_code_val").val("");		
+				$j("#kosa_class_code_val").attr("disabled", true);
+			};
+			
+			$j("#kosa_reg_yn").on("change", function() {
+				if($j("#kosa_reg_yn").val() != 1101) {
+					$j("#kosa_class_code_val").val("");
+					$j("#kosa_class_code_val").attr("disabled", true);
+					return;
+				}
+				else {
+					$j("#kosa_class_code_val").val("");
+					$j("#kosa_class_code_val").attr("disabled", false);
+					return;
+				}
+			});
+			
 			//등록버튼 시작
 			  $j("#submit").on("click",function(){
-				  var name = $("[name=name]").val();
-					var id = $("[name=id]").val();
-					var pwd = $("[name=pwd3]").val();
-					var hp = $("[name=hp]").val();
-					var email = $("[name=email]").val();
-					var reg_no = $("[name=reg_no]").val();
-					var pwd_check = $("[name=pwd_check]").val();
+				  	var name = $j("[name=name]").val();
+					var id = $j("[name=id]").val();
+					var pwd_input = $j("[name=pwd_input]").val();
+					var hp = $j("[name=hp]").val();
+					var email = $j("[name=email]").val();
+					var reg_no = $j("[name=reg_no]").val();
+					var pwd_ck_input = $j("[name=pwd_ck_input]").val();
+					var email2 = $j("[name=email2]").val();
+					var addr2 = $j("[name=addr2]").val();
+					var salary = $j("[name=salary]").val();
+					var join_day = $j("[name=join_day]").val();
+					var zip = $j("[name=zip]").val();
+					var addr1 = $j("[name=addr1]").val();
+					var addr2 = $j("[name=addr2]").val();
 					
-					var r = document.getElementById('pwd3');
+					// mil이 n일때 값 옮기기
+					var mil_level_val = $j("[name=mil_level_val]").val();
+					var mil_type_val = $j("[name=mil_type_val]").val();
+					
+					if(mil_level_val != "" ){
+						$j("[name=mil_level]").val(mil_level_val);
+					}
+					if(mil_level_val != "" ){
+						$j("[name=mil_type]").val(mil_type_val);
+					}
+					
+					//kosa등급 값 옮기기
+					var kosa_class_code_val = $j("[name=kosa_class_code_val]").val();
+					if(kosa_class_code_val != "" ){
+						$j("[name=kosa_class_code]").val(kosa_class_code_val);
+					}
+
+					// 연봉의 컴마 지우기
+					if($j("[name=salary]").val() != "" ){
+						var salCheck = salary.replace(/[^\d]+/g, "");
+						$j("[name=salary]").val(salCheck);
+					}
+					
+					//우편번호와 연봉의 값이 없을때
+					if($j("[name=salary]").val() == "" ){
+						$j("[name=salary]").val(0);
+					}
+				  	if($j("[name=zip]").val() == "" ){
+						$j("[name=zip]").val(0);
+					}			
+				  	
+				  	//입력된 아이디 비번 확인
 					console.log('pwd: ' + pwd);
 					console.log('id: ' + id);
 					
@@ -574,282 +839,41 @@
 						window.alert("아이디를 입력해 주세요.");
 						return false;
 					}
-					if(pwd == ''){
+					if(pwd_input == ''){
 						window.alert("비밀번호를 입력해 주세요.");
+						return false;
+					}
+					if(pwd_ck_input == ''){
+						window.alert("비밀번호를 확인해 주세요.");
 						return false;
 					}
 					if(hp == ''){
 						window.alert("핸드폰번호를 입력해 주세요.");
 						return false;
 					}
-					if(email == ''){
+					if(email == '' || email2 == '선택하세요.' || email2 == '선택' ){
 						window.alert("이메일을 입력해 주세요.");
+						return false;
+					}
+					if(email != '' && email2 == '' || email == '' && email2 != ''){
+						window.alert("이메일을 모두 입력해 주세요.");
 						return false;
 					}
 					if(reg_no == ''){
 						window.alert("주민등록번호를 입력해 주세요.");
 						return false;
 					}
-					
-				  if($("[name=salary]").val() == "" ){
-						$("[name=salary]").val(0);
+					if(join_day == ''){
+						window.alert("입사일자를 입력해 주세요.");
+						return false;
 					}
-				  if($("[name=years]").val() == "" ){
-						$("[name=years]").val(0);
+					if(zip != 0 && addr2 == ''){
+						window.alert("세부 주소를 입력해 주세요.");
+						return false;
 					}
-				  if($("[name=zip]").val() == "" ){
-						$("[name=zip]").val(0);
-					}				 
 				  alert('입력완료');
-			  });
+			});
 			// 등록 버튼 끝
 			
 			//script 끝
 	});
-</script>
-</head>
-
-<body>
-<div class="container">
-	<h1>직원상세정보</h1>
-	<div class="row">
-		<form class="form-horizontal" id="input-form" action="/inputForm" method="post" enctype="multipart/form-data">
-			<div class="col-xs-offset-10">
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<button type="submit" class="btn btn-primary">등록</button>
-				<a href="/" class="btn btn-primary">전화면</a>
-			</div>
-			
-			<div class="form-group">
-				<div class="col-xs-3 text-center">
-						<img src="${contextPath }/assets/img/unknown.png" class="img-thumbnail img-profile">
-				</div>
-				<label class="col-xs-1 control-label">사번</label>
-					<div class="col-xs-2">
-							<input type="text" class="form-control" id="sabun" readonly="readonly">
-					</div>
-					<label class="col-xs-1 control-label">*한글성명</label>
-					<div class="col-xs-2">
-						<input type="text" class="form-control" name="name">
-					</div>
-			</div>
-		</form>
-	</div>
-</div>	
-					
-					<table>
-						<tr>
-							<td rowspan="6">
-								<img src="${contextPath }/resources/img/unknown.png" style="width: 150px; height: 150px;" class="img-thumbnail img-profile"><br>
-								<input type="file" id="profile_image">
-								<input type="hidden" name="profile_image">
-							</td>
-							<td>*사번 <input type="text" disabled="disabled"></td>
-							<td>*한글성명<input type="text" name="name"></td>
-							<td>영문성명<input type="text" name="eng_name"></td>
-						</tr>
-						<tr>
-	 						<td>*아이디<input type="text" name="id" id="id"></td>
-							<td>*비밀번호<input type="text" id="pwd_input"></td>
-							<input type="hidden" id="pwd" name="pwd">
-							<td>비밀번호 확인<input type="text" id="pwd_ck_input"></td>
-							<input type="hidden" id="pwd_ck" name="pwd_ck">
-						</tr>
-						<tr>
-							<td>*이메일<input type="text" name="email" id="email">
-							<input type="hidden" id="email2" name="email2">
-							<br>
-							<input type="text" id="emaila" style="width:150px" disabled="true" value="선택하세요.">
-							<select name="emailCheck" id="emailCheck">
-									<option value="선택" selected>--선택--</option>
-									<option value="gmail.com">gmail.com</option>
-									<option value="naver.com">naver.com</option>
-									<option value="0">직접입력</option>
-							</select>
-							</td>
-							<td>*주민등록번호<input type="text" id="reg_no_input" maxlength="14"></td>
-							<input type="hidden" name="reg_no" id="reg_no">
-							<td>*핸드폰번호<input type="text" name="hp" id="hp" maxlength="13" onKeyup="hpNumber(this)"></td>
-						</tr>
-						<tr>
-							<td>연령<input type="text" name="years" id="years"></td>
-							<td>직종체크<select name="job_type">
-									<option value="" selected>--선택--</option>
-										<c:forEach var="com" items="${comList }">
-											<c:if test="${com.gubun eq 4}">
-												<option value="${com.code }">${com.name }</option>
-											</c:if>
-										</c:forEach>
-								</select>
-							</td>
-							<td>성별
-								<select name="sex">
-									<option value="" selected>--선택--</option>
-										<c:forEach var="com" items="${comList }">
-											<c:if test="${com.gubun eq 1}">
-												<option value="${com.code }">${com.name }</option>
-											</c:if>
-										</c:forEach>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td colspan="3">
-								주소<input type="text" name="zip" id="zip" placeholder="우편번호" readonly>
-								<input type="button" value="주소검색" id="addCheck"> 
-								<input type="text" name="addr1" placeholder="주소" readonly>
-								<input type="text" name="addr2" placeholder="세부주소">
-							</td>
-						</tr>
-						<tr>
-							<td>직위<select name="pos_gbn_code">
-									<option value="" selected>--선택--</option>
-										<c:forEach var="com" items="${comList }">
-											<c:if test="${com.gubun eq 3}">
-												<option value="${com.code }">${com.name }</option>
-											</c:if>
-										</c:forEach>
-								</select>
-							</td>
-							<td>부서<select name="dept_code">
-									<option value="" selected>--선택--</option>
-										<c:forEach var="com" items="${comList }">
-											<c:if test="${com.gubun eq 5}">
-												<option value="${com.code }">${com.name }</option>
-											</c:if>
-										</c:forEach>
-								</select>
-							</td>
-							<td>연봉<input type="text" name="salary" id="salary" placeholder="(만원)"></td>
-						</tr>
-						<tr>
-							<td>입사구분<select name="join_gbn_code">
-									<option value="" selected>--선택--</option>
-										<c:forEach var="com" items="${comList }">
-											<c:if test="${com.gubun eq 6}">
-												<option value="${com.code }">${com.name }</option>
-											</c:if>
-										</c:forEach>
-								</select>
-							</td>
-							<td>최종학력<select name=gart_level>
-									<option value="" selected>--선택--</option>
-										<c:forEach var="com" items="${comList }">
-											<c:if test="${com.gubun eq 7}">
-												<option value="${com.code }">${com.name }</option>
-											</c:if>
-										</c:forEach>
-								</select>
-							</td>
-							<td>투입여부<select name="put_yn">
-									<option value="" selected>--선택--</option>
-										<c:forEach var="com" items="${comList }">
-											<c:if test="${com.gubun eq 8}">
-												<option value="${com.code }">${com.name }</option>
-											</c:if>
-										</c:forEach>
-								</select>
-							</td>
-							<td>군필여부
-								<select name="mil_yn">
-									<option value="" selected>--선택--</option>
-										<c:forEach var="com" items="${comList }">
-											<c:if test="${com.gubun eq 2}">
-												<option value="${com.code }">${com.name }</option>
-											</c:if>
-										</c:forEach>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td>군별<select name="mil_type">
-									<option value="" selected>--선택--</option>
-										<c:forEach var="com" items="${comList }">
-											<c:if test="${com.gubun eq 9}">
-												<option value="${com.code }">${com.name }</option>
-											</c:if>
-										</c:forEach>
-								</select>
-							</td>
-							<td>계급<select name="mil_level">
-									<option value="" selected>--선택--</option>
-										<c:forEach var="com" items="${comList }">
-											<c:if test="${com.gubun eq 10}">
-												<option value="${com.code }">${com.name }</option>
-											</c:if>
-										</c:forEach>
-								</select>
-							</td>
-							<td>입영일자<input type="text" name="mil_startdate" id="datepicker1" readonly></td>
-							<td>전역일자<input type="text" name="mil_enddate" id="datepicker2" readonly></td>
-						</tr>
-						<tr>
-							<td>KOSA등록<select name="kosa_reg_yn">
-									<option value="" selected>--선택--</option>
-										<c:forEach var="com" items="${comList }">
-											<c:if test="${com.gubun eq 11}">
-												<option value="${com.code }">${com.name }</option>
-											</c:if>
-										</c:forEach>
-								</select>
-							</td>
-							<td>KOSA등급<select name="kosa_class_code">
-									<option value="" selected>--선택--</option>
-										<c:forEach var="com" items="${comList }">
-											<c:if test="${com.gubun eq 12}">
-												<option value="${com.code }">${com.name }</option>
-											</c:if>
-										</c:forEach>
-								</select>
-							</td>
-							<td>입사일자<input type="text" name="join_day" id="datepicker3" readonly></td>
-							<td>퇴사일자<input type="text" name="retire_day" id="datepicker4" readonly></td>
-						</tr>
-						<tr>
-							<td>사업자번호<input type="text" name="cmp_reg_no"></td>
-							<td>업체명<input type="text" name="crm_name"></td>
-							<td>사업자등록증<input type="text" id="cmp_upload" name="cmp_upload"></td>
-							<input type="hidden" name="cmp_reg_image">
-							<td><input type="button" value="미리보기"><input type="button" value="등록"></td>
-						</tr>
-						<tr>
-							<td colspan="2" rowspan="2">자기소개<textarea name="self_intro" style="width:600px; height:25px;"></textarea></td>
-							<td>이력서<input type="text" name="carrier"></td>
-							<input type="hidden" class="form-control" name="carrier_image">
-							<td><input type="button" value="파일업로드"><input type="button" value="미리보기"></td>
-						</tr>
-					</table>
-					
-					<input type="button" value="전화면" id="mainView">
-					<input type="submit" id="submit" value="등록">
-					<input type="reset" value="취소">
-				</form>
-            </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
-
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
-</div>
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-
-</body>
-
-
-</html>

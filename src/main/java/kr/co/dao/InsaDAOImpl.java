@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.co.vo.FileVO;
 import kr.co.vo.InsaVO;
+import kr.co.vo.SearchCriteria;
 import kr.co.vo.comVO;
 
 @Repository
@@ -26,11 +27,17 @@ public class InsaDAOImpl implements InsaDAO{
 	}
 
 	@Override
-	public List<InsaVO> list() throws Exception {
+	public List<InsaVO> list(SearchCriteria scri) throws Exception {
 		// TODO Auto-generated method stub
-		return session.selectList("insaMapper.list");
+		return session.selectList("insaMapper.listPage", scri);
 	}
 
+	@Override
+	public int listCount(SearchCriteria scri) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectOne("insaMapper.listCount", scri);
+	}
+	
 	@Override
 	public List<comVO> comList() throws Exception {
 		// TODO Auto-generated method stub
@@ -67,4 +74,17 @@ public class InsaDAOImpl implements InsaDAO{
 		// TODO Auto-generated method stub
 		return session.delete("insaMapper.deleteSabun", insaVO);
 	}
+
+	@Override
+	public InsaVO loadSabun(int sabun) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectOne("insaMapper.loadSabun", sabun);
+	}
+
+	@Override
+	public int updateSabun(InsaVO insaVO) throws Exception {
+		// TODO Auto-generated method stub
+		return session.update("insaMapper.updateSabun", insaVO);
+	}
+
 }

@@ -47,7 +47,11 @@
             
 	<context:component-scan base-package="kr.co.controller" />
 	
+	 <!-- Handles HTTP GET requests for /resources/** by efficiently serving 
+        up static resources in the ${webappRoot}/resources directory -->
 	<!-- url매핑 -->
 	<mvc:resources mapping="/photo/**" location="file:C:/Users/PINOSOFT/Desktop/photo/" />
+	<resources mapping="/resources/**" location="/resources/" />
+	<mvc:resources mapping="/image/**" location="C:\Users\PINOSOFT\Desktop\photo" />
 	
 </beans:beans>

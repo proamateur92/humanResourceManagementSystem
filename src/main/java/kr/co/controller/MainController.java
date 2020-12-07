@@ -1,16 +1,14 @@
 package kr.co.controller;
 
-import java.io.FileInputStream;
-import java.io.OutputStream;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,9 +16,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import kr.co.vo.SearchCriteria;
 import kr.co.service.InsaService;
+import kr.co.vo.Criteria;
 import kr.co.vo.FileVO;
 import kr.co.vo.InsaVO;
+import kr.co.vo.PageMaker;
 import kr.co.vo.comVO;
 
 @Controller
@@ -71,9 +72,8 @@ public class MainController {
 		logger.info("현재사번~~~~~~~~~~"+ Integer.toString(nowSabun));
 		logger.info(check < 1 ? "N" : "Y");
 
-//		model.addAttribute();
 		
-		return "redirect:/";
+		return "redirect:/inputForm";
 	}
 
 	//파일 업로드
@@ -106,15 +106,20 @@ public class MainController {
 	
 	//직원 목록
 	@RequestMapping(value = "/listForm", method = RequestMethod.GET)
-	public String listForm(Model model) throws Exception {
-
+	public String listForm(Model model,@ModelAttribute("scri") SearchCriteria scri) throws Exception {
+		logger.info("List Form");
+		
 		List<comVO> com = service.comList();
-		List<InsaVO> list = service.list();
-
+		
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(scri);
+		pageMaker.setTotalCount(service.listCount(scri));
+		
 		model.addAttribute("com", com);
-		model.addAttribute("list", list);
+		model.addAttribute("list", service.list(scri));
+		model.addAttribute("pageMaker",pageMaker);
 
-		return "listForm2";
+		return "listFormNew";
 	}
 	
 	//직원 삭제
@@ -122,24 +127,72 @@ public class MainController {
 	@RequestMapping(value="/delete", method=RequestMethod.POST)
 	public int deleteSabun(InsaVO insaVO) throws Exception {
 		
-		logger.info(Integer.toString(insaVO.getSabun()));
+		logger.info("Delete Form");
 		int check = service.deleteSabun(insaVO);
 	
 		return check;
 	}
 	
 	//직원 수정
-	@RequestMapping(value="/update", method=RequestMethod.GET)
-	public String updatePage() throws Exception {
+	@RequestMapping(value="/updateForm", method=RequestMethod.GET)
+	public String updatePage(InsaVO insaVO, Model model) throws Exception {
 		
-		return "updateForm";
+		List<comVO> list = service.comList();
+		
+		int sabun = insaVO.getSabun();
+		InsaVO insaInfo = service.loadSabun(sabun);
+		
+		String jumin = insaInfo.getReg_no();
+		String email = insaInfo.getEmail();
+		String newJumin ="";
+		String newEmail1 = "";
+		String newEmail2 = "";
+		
+		for(int i=0; i<jumin.length(); i++) {
+			if(i<8||i>12) {
+				newJumin += jumin.charAt(i);
+			} else {
+				newJumin+='*';
+			}
+		}
+
+		logger.info("jumin: "+ jumin);
+		logger.info("email: "+ email);
+		
+		if(email.contains("@")){
+			int idx = email.indexOf("@");
+			newEmail1 = email.substring(0, idx);
+			newEmail2 = email.substring(idx+1);
+		}
+		
+		logger.info("newEmail1: "+ newEmail1);
+		logger.info("newEmail2: "+ newEmail2);
+		
+		model.addAttribute("newEmail1", newEmail1);
+		model.addAttribute("newEmail2", newEmail2);
+		model.addAttribute("newJumin", newJumin);
+		model.addAttribute("insaInfo", insaInfo);
+		model.addAttribute("comList", list);
+		
+		return "/updateForm";
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public int updateSabun(InsaVO insaVO) throws Exception {
-		
+	@RequestMapping(value="/updateForm", method=RequestMethod.POST)
+	public int updateSabun(InsaVO insaVO,@RequestParam String email2) throws Exception {
+		logger.info("Update Form");
+
 		int check = 0;
+		String newEmail = insaVO.getEmail()+"@"+email2;
+		
+		insaVO.setEmail(newEmail);
+		logger.info(Integer.toString(insaVO.getSabun()));
+		logger.info(insaVO.getId());
+		logger.info(insaVO.getName());
+		logger.info(insaVO.getPwd());
+		logger.info(insaVO.getEmail());
+		
+		check = service.updateSabun(insaVO);
 		
 		return check;
 	}

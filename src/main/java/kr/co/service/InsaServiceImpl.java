@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.co.dao.InsaDAO;
 import kr.co.vo.FileVO;
 import kr.co.vo.InsaVO;
+import kr.co.vo.SearchCriteria;
 import kr.co.vo.comVO;
 
 
@@ -31,11 +32,17 @@ public class InsaServiceImpl implements InsaService{
 	}
 
 	@Override
-	public List<InsaVO> list() throws Exception {
+	public List<InsaVO> list(SearchCriteria scri) throws Exception {
 		// TODO Auto-generated method stub
-		return dao.list();
+		return dao.list(scri);
 	}
 
+	@Override
+	public int listCount(SearchCriteria scri) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.listCount(scri);
+	}
+	
 	@Override
 	public List<comVO> comList() throws Exception {
 		// TODO Auto-generated method stub
@@ -106,4 +113,17 @@ public class InsaServiceImpl implements InsaService{
 		// TODO Auto-generated method stub
 		return dao.deleteSabun(insaVO);
 	}
+
+	@Override
+	public InsaVO loadSabun(int sabun) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.loadSabun(sabun);
+	}
+
+	@Override
+	public int updateSabun(InsaVO insaVO) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.updateSabun(insaVO);
+	}
+
 }
